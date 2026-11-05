@@ -1,22 +1,22 @@
-from langchain_community.llms.tongyi import Tongyi
-from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.prompts import PromptTemplate
-from pydantic import BaseModel, Field
+from langchain_community.embeddings import DashScopeEmbeddings
+import numpy as np
 
-class Person(BaseModel):
-    name: str = Field(description="姓名")
-    age: int = Field(description="年龄")
+def euclidean_distance(a, b):
+    """计算欧氏距离"""
+    return np.linalg.norm(np.array(a) - np.array(b))
 
-parser = JsonOutputParser(pydantic_object=Person)
+if __name__ == '__main__':
+    # 准备三个测试文本：前两个语义相近，第三个语义无关
+    texts = ["猫坐在垫子上", "一只猫在垫子上休息", "今天天气很好"]
+    vectors = DashScopeEmbeddings().embed_documents(texts)
 
-# 在 Prompt 中注入格式要求
-prompt = PromptTemplate(
-    template="解析这段文字：{input}\n{format_instructions}",
-    input_variables=["input"],
-    partial_variables={"format_instructions": parser.get_format_instructions()},
-)
-llm = Tongyi(model="qwen-max")
+    # 计算欧氏距离并观察结果
+    print(f"'{texts[0]}' 与 '{texts[1]}' 的欧氏距离: {euclidean_distance(vectors[0], vectors[1])}")
+    print(f"'{texts[0]}' 与 '{texts[2]}' 的欧氏距离: {euclidean_distance(vectors[0], vectors[2])}")
+    print(f"'{texts[1]}' 与 '{texts[2]}' 的欧氏距离: {euclidean_distance(vectors[1], vectors[2])}")
 
-chain = prompt | llm | parser
-# 输出为 Python dict
-print(chain.invoke({"input": "小明25岁"}))
+"""
+'猫坐在垫子上' 与 '一只猫在垫子上休息' 的欧氏距离: 53.30557172891227
+'猫坐在垫子上' 与 '今天天气很好' 的欧氏距离: 115.3968429781511
+'一只猫在垫子上休息' 与 '今天天气很好' 的欧氏距离: 113.25200288012354
+"""

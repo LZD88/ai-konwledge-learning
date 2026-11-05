@@ -17,7 +17,7 @@ chat_history = [
 result = llm.stream(input=chat_history)
 
 # 4. 处理输出
-#for chunk in result:
+for chunk in result:
     # print(type(chunk))
     # print(chunk)
-    #print(chunk.content, end='', flush=True)
+    print(chunk.content, end='', flush=True)
