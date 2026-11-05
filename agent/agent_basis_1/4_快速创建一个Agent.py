@@ -45,8 +45,8 @@ print(result['messages'])
     "type": "human",
     "content": "商品id为1，这个是一个什么商品"
   },
-
-
+  
+  
   {
     "type": "ai",
     "content": "",
@@ -89,8 +89,8 @@ print(result['messages'])
     ],
     "invalid_tool_calls": []
   },
-
-
+  
+  
   {
     "type": "tool",
     "content": "爱疯手机",
@@ -98,8 +98,8 @@ print(result['messages'])
     "id": "33e05796-e750-4591-aaae-99129e20549e",
     "tool_call_id": "call_5920205eaf72447fbb07491e"
   },
-
-
+  
+  
   {
     "type": "ai",
     "content": "商品ID为1的商品是“爱疯手机”。",
@@ -121,7 +121,7 @@ print(result['messages'])
     "tool_calls": [],
     "invalid_tool_calls": []
   }
-
+  
 ]
 """
 print(len(result['messages']))
