@@ -2,11 +2,11 @@ from openai import OpenAI
 
 # 1.创建客户端对象
 client = OpenAI(
-    api_key="sk-e6a85c002d804560a7ef3d332d0075e9",
+    api_key="你的API KEY",
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
 )
 
-# 2.调用模型 5c
+# 2.调用模型
 completion = client.chat.completions.create(
     model="qwen3-max",
     messages=[
